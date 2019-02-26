@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>toDoList</title>
+    <style>
+      #app {
+        margin: 50px auto;
+        width: 600px;
+      }
+      fieldset {
+        border: 3px solid orangered;
+        margin-bottom: 100px;
+      }
+      fieldset > input {
+        width: 200px;
+        height: 30px;
+        margin: 10px 0;
+      }
+      table {
+        width: 600px;
+        border: 2px solid orangered;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <fieldset>
+        <legend>ToDoList</legend>
+        <div>
+          <span>姓名：</span>
+          <input type="text" placeholder="请输入姓名"  v-model="newMessage.name">
+        </div>
+        <div>
+          <span>年龄：</span>
+          <input type="text" placeholder="请输入年龄" v-model="newMessage.age">
+        </div>
+        <div>
+          <span>性别：</span>
+          <select v-model="newMessage.sex">
+            <option value="男">男</option>
+            <option value="女">女</option>
+          </select>
+        </div>
+        <div>
+          <span>手机：</span>
+          <input type="text" placeholder="请输入手机" v-model="newMessage.phone">
+        </div>
+        <button @click="handleAdd()">添加召唤师</button>
+      </fieldset>
+
+      <table>
+        <thead>
+          <tr>
+            <td>姓名</td>
+            <td>年龄</td>
+            <td>性别</td>
+            <td>手机</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(p,index) in message">
+            <td>{{ p.name }}</td>
+            <td>{{ p.age }}</td>
+            <td>{{ p.sex }}</td>
+            <td>{{ p.phone }}</td>
+            <td>
+              <button @click="handleDel(index)">删除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+<script src="https://cdn.bootcss.com/vue/2.6.6/vue.common.dev.js"></script>
+<script type="text/javascript">
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      message: [
+        { name: "德玛", age: 12, sex: "男", phone: 1234567869 },
+        { name: "诺克", age: 12, sex: "男", phone: 1234367839 },
+        { name: "德邦", age: 12, sex: "女", phone: 1223526789 },
+        { name: "嘉文", age: 12, sex: "男", phone: 1234578789 },
+        { name: "瑞文", age: 12, sex: "女", phone: 1234525289 }
+      ],
+      newMessage: { name: '', age: '', sex: '男', phone: '' }
+    },
+    methods: {
+      handleAdd() {
+        // alert(11111)
+        if(this.newMessage.name===''){
+          alert('姓名不能为空')
+          return
+        }
+        if(this.newMessage.age===''){
+          alert('年龄不能为空')
+          return
+        }
+        if(this.newMessage.sex===''){
+          alert('性别不能为空')
+          return
+        }
+        if(this.newMessage.phone===''){
+          alert('手机不能为空')
+          return
+        }
+        this.message.unshift(this.newMessage)
+        this.newMessage={ name: '', age: '', sex: '男', phone: '' }
+      },
+      handleDel(index){
+        this.message.splice(index,1)
+      }
+    }
+  });
+</script>
